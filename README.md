@@ -1,4 +1,4 @@
-# mihiru-site
+# miarticles-vue
 
 ## Project setup
 ```
