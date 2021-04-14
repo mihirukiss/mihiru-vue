@@ -81,10 +81,10 @@ export default {
       this.maxRatting = localStorage.maxRatting
     }
     if (localStorage.allowTags) {
-      this.allowTags = localStorage.allowTags
+      this.allowTags = localStorage.allowTags.split(',')
     }
     if (localStorage.denyTags) {
-      this.denyTags = localStorage.denyTags
+      this.denyTags = localStorage.denyTags.split(',')
     }
     axios.get('https://cdn.mihiru.com/api/mi-articles/tags').then(response => this.tags = response.data)
     this.doSearch(false)
@@ -96,10 +96,10 @@ export default {
       localStorage.maxRatting = newMaxRatting
     },
     allowTags(newAllowTags) {
-      localStorage.allowTags = newAllowTags
+      localStorage.allowTags = newAllowTags.join(',')
     },
     denyTags(newDenyTags) {
-      localStorage.denyTags = newDenyTags
+      localStorage.denyTags = newDenyTags.join(',')
     }
   },
 
@@ -116,14 +116,18 @@ export default {
       const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       const windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
       const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-      if(scrollTop + windowHeight >= scrollHeight){
+      if((scrollTop + windowHeight >= scrollHeight - 100) && !this.loading){
         this.doSearch(true)
       }
     },
     doSearch(nextPage) {
       if (nextPage && !this.lastSearchOptions.hasNextPage) {
         return
-      } else if (nextPage){
+      }
+      this.loading = true
+      const newLoadingRequestId = new Date().getTime()
+      this.lastSearchOptions.loadingRequestId = newLoadingRequestId
+      if (nextPage){
         this.lastSearchOptions.pageIndex++
       } else {
         this.lastSearchOptions.pageIndex = 0
@@ -133,9 +137,6 @@ export default {
         this.lastSearchOptions.denyTags = [...this.denyTags]
         this.lastSearchOptions.pageSize = Math.max(10, Math.max(1, Math.ceil(document.body.clientWidth/320)) * (Math.max(1, Math.ceil(document.body.clientHeight/300)) + 1))
       }
-      const newLoadingRequestId = new Date().getTime()
-      this.lastSearchOptions.loadingRequestId = newLoadingRequestId
-      this.loading = true
       axios.post('https://cdn.mihiru.com/api/mi-articles/search', {
         pageIndex: this.lastSearchOptions.pageIndex,
         pageSize: this.lastSearchOptions.pageSize,
