@@ -7,6 +7,7 @@
     >
       <v-img alt="Logo" class="mr-2 flex-grow-0 flex-shrink-0" :src="require('../assets/logo.png')" transition="scale-transition" />
       <v-text-field label="搜索" append-icon="mdi-magnify" class="mx-2 flex-grow-1 flex-shrink-1" v-model="keyword" @click:append="searchBtnClick" @keydown="searchFieldKeydown" clearable solo hide-details dense></v-text-field>
+      <v-icon class="flex-grow-0 flex-shrink-0 mr-2" @click.stop="showHelpDialog = !showHelpDialog">mdi-help-circle-outline</v-icon>
       <v-icon class="flex-grow-0 flex-shrink-0" @click.stop="showConfigDrawer = !showConfigDrawer">mdi-cog</v-icon>
     </v-app-bar>
     <v-navigation-drawer v-model="showConfigDrawer" fixed temporary right>
@@ -33,6 +34,28 @@
       <v-overlay :value="loading">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-overlay>
+      <v-dialog v-model="showHelpDialog">
+        <v-card>
+            <v-toolbar dark color="primary">
+                <v-btn icon dark @click="showHelpDialog = false">
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
+            </v-toolbar>
+            <v-card-title>注意</v-card-title>
+            <v-card-text>
+              <p>本站点仅为个人兴趣建立, 与任何运营或Liver无关, 文章内容均为虚构, 如有雷同, 纯属巧合. 怪文书难免有冲塔、乱组CP及黑屁等要素, 观看前请自行做好心理准备.</p>
+            </v-card-text>
+            <v-card-title>使用帮助</v-card-title>
+            <v-card-text>
+              <p>点击右上方齿轮图标可配置标签黑白名单, 修改后的配置将在下次搜索或刷新页面后生效.</p>
+              <p>顶部的搜索框可输入关键字搜索标题、作者或正文中包含该关键字的文章.</p>
+            </v-card-text>
+            <v-card-title>其他说明</v-card-title>
+            <v-card-text>
+              <p>目前站内文章主要来自S1 V区, 另有部分来自NGA V区和网友投稿等. 因为是人力收集, 难免有遗漏, 如果你发现有值得收录的文章, 欢迎来信告知. 因为难以一一请求转载许可, 如果你不想自己撰写的文章被收录, 可以联系我删除. 之前也考虑过收录B站上的文章, 但因为B站文章基本标注禁止转载所以放弃了, 如果你有在B站上写的文章同意收录的话请来信告知. 当然也欢迎直接通过邮件投稿. 一切联络事项请发送邮件至kiss#mihiru.com (请自行替换#为@)</p>
+            </v-card-text>
+        </v-card>
+      </v-dialog>
     </v-main>
   </v-app>
 </template>
@@ -60,6 +83,7 @@ export default {
     tags: [],
     allowTags: [],
     denyTags: [],
+    showHelpDialog: false,
     lastSearchOptions: {
       loadingRequestId: null,
       hasNextPage: false,
@@ -85,6 +109,10 @@ export default {
     }
     if (localStorage.denyTags) {
       this.denyTags = localStorage.denyTags.split(',')
+    }
+    if (!localStorage.alreadyShowHelpDialog) {
+      localStorage.alreadyShowHelpDialog = true
+      this.showHelpDialog = true
     }
     axios.get('https://cdn.mihiru.com/api/mi-articles/tags').then(response => this.tags = response.data)
     this.doSearch(false)
