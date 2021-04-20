@@ -335,3 +335,33 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
   
+.article-content img{
+  max-width: 100%;
+}
+.article-content .italic {
+  font-style: italic;
+}
+.article-content .indent {
+  text-indent: 28px;
+}
+.article-content span.spoiler {
+  background-color: black;
+  color: black;
+}
+.article-content span.spoiler:hover,
+.article-content span.spoiler:active {
+  background-color: inherit;
+  color: inherit;
+}
+.article-content .margin-indent {
+  margin-left: 28px;
+}
+.article-content .margin-indent2 {
+  margin-left: 56px;
+}
+.article-content .pic-description {
+  font-size: 0.8em;
+}
+.article-content h1,.article-content h2,.article-content h3,.article-content h4,.article-content h5,.article-content h6 {
+  line-height: 1.5em;
+}
