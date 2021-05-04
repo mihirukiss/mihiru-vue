@@ -1,22 +1,22 @@
 <template>
     <v-dialog v-model="dialogOpen" fullscreen hide-overlay>
         <template v-slot:activator="{ on, attrs }">
-            <v-card v-bind="attrs" v-on="on" :class="'d-flex flex-column ma-2' + rattingColor[article.ratting]" max-width="300">
+            <v-card v-bind="attrs" v-on="on" class="d-flex flex-column ma-2" :color="rattingColor[article.ratting]" max-width="300">
                 <v-card-title v-text="article.title"></v-card-title>
                 <v-card-subtitle>{{article.author}}</v-card-subtitle>
                 <v-card-text class="flex-grow-1" v-text="article.summary"></v-card-text>
                 <v-card-text class="px-4 py-0">
                     <v-chip-group>
-                        <v-chip v-for="tag in article.tags.split(',')" :key="tag" :class="rattingTagColor[article.ratting]">{{ tag }}</v-chip>
+                        <v-chip v-for="tag in article.tags.split(',')" :key="tag">{{ tag }}</v-chip>
                     </v-chip-group>
                 </v-card-text>
             </v-card>
         </template>
         <v-card>
-            <v-toolbar dark color="primary">
+            <v-toolbar color="info">
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon dark v-bind="attrs" v-on="on" @click="dialogOpen = false">
+                        <v-btn icon v-bind="attrs" v-on="on" @click="dialogOpen = false">
                             <v-icon>mdi-close</v-icon>
                         </v-btn>
                     </template>
@@ -24,7 +24,7 @@
                 </v-tooltip>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon dark v-bind="attrs" v-on="on" :data-clipboard-text="'https://mihiru.com/miarticles?id=' + article.id" class="copy-link" @click="copyLink">
+                        <v-btn icon v-bind="attrs" v-on="on" :data-clipboard-text="'https://mihiru.com/miarticles?id=' + article.id" class="copy-link" @click="copyLink">
                             <v-icon>mdi-content-copy</v-icon>
                         </v-btn>
                     </template>
@@ -42,7 +42,7 @@
             <v-card-subtitle>{{ article.author }}</v-card-subtitle>
             <v-card-text v-html="articleContent" class="article-content"></v-card-text>
             <v-card-actions>
-                <v-btn text class="grey lighten-2" @click="dialogOpen = false">关闭</v-btn>
+                <v-btn outlined @click="dialogOpen = false">关闭</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -57,8 +57,7 @@ export default {
     data: ()=>({
         dialogOpen: false,
         articleContent: null,
-        rattingColor: ['', ' orange accent-2', ' red darken-2'],
-        rattingTagColor: ['', 'orange lighten-3', 'red lighten-3'],
+        rattingColor: ['', 'warning', 'error'],
         successNotice: false,
         errorNotice: false
     }),

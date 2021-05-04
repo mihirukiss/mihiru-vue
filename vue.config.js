@@ -7,5 +7,5 @@ module.exports = {
       config.plugin('webpack-bundle-analyzer').use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
     }
   },
-  publicPath: process.env.NODE_ENV === 'production' ? 'https://cdn.mihiru.com/miarticles/' : '/'
+  publicPath: process.env.NODE_ENV === 'production' ? 'https://cdn.mihiru.com/' : '/'
 }

@@ -1,10 +1,10 @@
 <template>
     <v-dialog v-model="dialogOpen" fullscreen hide-overlay>
         <v-card>
-            <v-toolbar dark color="primary">
+            <v-toolbar color="info">
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon dark v-bind="attrs" v-on="on" @click="closeDialog">
+                        <v-btn icon v-bind="attrs" v-on="on" @click="closeDialog">
                             <v-icon>mdi-close</v-icon>
                         </v-btn>
                     </template>
@@ -12,7 +12,7 @@
                 </v-tooltip>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon dark v-bind="attrs" v-on="on" :data-clipboard-text="'https://mihiru.com/miarticles?id=' + article.id" class="copy-link" @click="copyLink">
+                        <v-btn icon v-bind="attrs" v-on="on" :data-clipboard-text="'https://mihiru.com/miarticles?id=' + article.id" class="copy-link" @click="copyLink">
                             <v-icon>mdi-content-copy</v-icon>
                         </v-btn>
                     </template>
@@ -30,7 +30,7 @@
             <v-card-subtitle>{{ article.author }}</v-card-subtitle>
             <v-card-text v-html="article.content" class="article-content"></v-card-text>
             <v-card-actions>
-                <v-btn text class="grey lighten-2" @click="dialogOpen = false">关闭</v-btn>
+                <v-btn outlined @click="dialogOpen = false">关闭</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
