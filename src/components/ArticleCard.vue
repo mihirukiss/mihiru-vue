@@ -67,7 +67,7 @@ export default {
     watch: {
         dialogOpen(newValue) {
             if (newValue && this.articleContent === null) {
-                axios.get(process.env.VUE_APP_API_PREFIX + '/mi-articles/' + this.article.id + '?v=' + this.article.version).then(response => this.articleContent = response.data.content)
+                axios.get(process.env.VUE_APP_API_ARTICLES_PREFIX + this.article.id + '?v=' + this.article.version).then(response => this.articleContent = response.data.content)
             }
         }
     },

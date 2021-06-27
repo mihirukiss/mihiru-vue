@@ -125,7 +125,7 @@ export default {
       localStorage.alreadyShowHelpDialog = true
       this.showHelpDialog = true
     }
-    axios.get(process.env.VUE_APP_API_PREFIX + '/mi-articles/tags').then(response => this.tags = response.data)
+    axios.get(process.env.VUE_APP_API_ARTICLES_PREFIX + 'tags').then(response => this.tags = response.data)
     this.doSearch(false)
     addEventListener('scroll', this.handleScroll)
   },
@@ -180,7 +180,7 @@ export default {
         this.lastSearchOptions.denyTags = [...this.denyTags]
         this.lastSearchOptions.pageSize = Math.max(10, Math.max(1, Math.ceil(document.body.clientWidth/320)) * (Math.max(1, Math.ceil(document.body.clientHeight/300)) + 1))
       }
-      axios.post(process.env.VUE_APP_API_PREFIX + '/mi-articles/search', {
+      axios.post(process.env.VUE_APP_API_ARTICLES_PREFIX + 'search', {
         pageIndex: this.lastSearchOptions.pageIndex,
         pageSize: this.lastSearchOptions.pageSize,
         maxRatting: this.lastSearchOptions.maxRatting,

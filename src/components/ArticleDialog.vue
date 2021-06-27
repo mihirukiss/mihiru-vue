@@ -53,7 +53,7 @@ export default {
     },
     mounted: function(){
         document.getElementsByTagName('html')[0].className = 'overflow-y-hidden'
-        axios.get(process.env.VUE_APP_API_PREFIX + '/mi-articles/' + this.articleId).then(response => this.article = response.data)
+        axios.get(process.env.VUE_APP_API_ARTICLES_PREFIX + this.articleId).then(response => this.article = response.data)
     },
     methods: {
         closeDialog(){

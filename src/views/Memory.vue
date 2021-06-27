@@ -35,7 +35,7 @@ export default {
     watch: {
         dateIndex(newDateIndex) {
             if (!this.dateData[newDateIndex]) {
-                axios.get(process.env.VUE_APP_API_PREFIX + '/memory/' + this.dateList[newDateIndex]).then(response => this.dateData[newDateIndex] = response.data)
+                axios.get(process.env.VUE_APP_API_MEMORY_PREFIX + this.dateList[newDateIndex]).then(response => this.dateData[newDateIndex] = response.data)
             }
         }
     },
