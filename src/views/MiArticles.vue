@@ -31,7 +31,9 @@
     </v-navigation-drawer>
 
     <v-main>
-      <article-list :articles="articles" />
+      <v-container class="d-inline-flex flex-wrap justify-center" fluid>
+          <article-card v-for="article in articles" :article="article" v-bind:key="article.id"></article-card>
+      </v-container>
       <article-dialog v-if="articleId" :articleId="articleId"></article-dialog>
       <v-overlay :value="loading">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -67,19 +69,19 @@
 </style>
 <script>
 import axios from 'axios'
-import ArticleList from '../components/ArticleList.vue';
+import ArticleCard from '../components/ArticleCard.vue';
 import ArticleDialog from '../components/ArticleDialog.vue';
 
 export default {
   name: 'MiArticles',
 
   components: {
-    ArticleList,
+    ArticleCard,
     ArticleDialog
   },
 
   data: () => ({
-    articles: null,
+    articles: [],
     loading: false,
     maxRatting: 0,
     keyword: '',
@@ -192,9 +194,9 @@ export default {
           return
         }
         if (nextPage) {
-          this.articles = this.articles.concat(response.data.data)
+          this.articles.push(...response.data.data)
         } else {
-          this.articles = response.data.data
+          this.articles.splice(0, this.articles.length, ...response.data.data)
         }
         this.lastSearchOptions.hasNextPage = response.data.pageCount > (this.lastSearchOptions.pageIndex + 1)
         this.loading = false
