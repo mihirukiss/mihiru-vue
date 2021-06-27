@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 const Home = () => import('../views/Home.vue')
 const MiArticles = () => import('../views/MiArticles.vue')
+const Memory = () => import('../views/Memory.vue')
 
 Vue.use(VueRouter)
 
@@ -23,7 +24,15 @@ const routes = [
     meta: {
       title: "怪弥书"
     }
-  }
+  },
+  {
+    path: '/memory',
+    name: 'Memory',
+    component: Memory,
+    meta: {
+      title: "Memory"
+    }
+  },
 ]
 
 const router = new VueRouter({

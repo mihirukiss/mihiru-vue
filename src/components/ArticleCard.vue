@@ -7,7 +7,7 @@
                 <v-card-text class="flex-grow-1" v-text="article.summary"></v-card-text>
                 <v-card-text class="px-4 py-0">
                     <v-chip-group>
-                        <v-chip v-for="tag in article.tags.split(',')" :key="tag">{{ tag }}</v-chip>
+                        <v-chip v-for="tag in article.tags" :key="tag">{{ tag }}</v-chip>
                     </v-chip-group>
                 </v-card-text>
             </v-card>
@@ -67,7 +67,7 @@ export default {
     watch: {
         dialogOpen(newValue) {
             if (newValue && this.articleContent === null) {
-                axios.get('https://cdn.mihiru.com/api/mi-articles/' + this.article.id + '?v=' + this.article.version).then(response => this.articleContent = response.data.content)
+                axios.get(process.env.VUE_APP_API_PREFIX + '/mi-articles/' + this.article.id + '?v=' + this.article.version).then(response => this.articleContent = response.data.content)
             }
         }
     },
