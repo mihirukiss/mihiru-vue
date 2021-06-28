@@ -1,12 +1,12 @@
 {
-  "name": "miarticles-vue",
+  "name": "mihiru-vue",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "analyz": "NODE_ENV=production npm_config_report=true npm run build"
+    "analyze": "cross-env NODE_ENV=production npm_config_report=true npm run build"
   },
   "dependencies": {
     "axios": "^0.21.1",
