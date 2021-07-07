@@ -1,0 +1,38 @@
+.date-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+.prev-day .year, .next-day .year {
+    font-size: 14px;
+}
+
+.prev-day .date, .next-day .date {
+    font-size: 20px;
+}
+
+.curr-day {
+    padding: 0 20px;
+    background: transparent !important;
+}
+
+.curr-day .year {
+    font-size: 30px;
+}
+
+.curr-day .date {
+    font-size: 40px;
+}
+
+.memory-card .user-profile .avatar {
+    width: 48px;
+    height: 48px;
+    vertical-align: middle;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
