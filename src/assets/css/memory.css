@@ -1,38 +1,293 @@
 .date-line {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
 }
 
-.prev-day .year, .next-day .year {
-    font-size: 14px;
+.prev-day,
+.next-day {
+  font-size: 14px;
+  cursor: default;
 }
 
-.prev-day .date, .next-day .date {
-    font-size: 20px;
+.prev-day .year,
+.next-day .year {
+  font-size: 14px;
+}
+
+.prev-day .date,
+.next-day .date {
+  font-size: 20px;
 }
 
 .curr-day {
-    padding: 0 20px;
-    background: transparent !important;
+  padding: 0 20px;
+  background: transparent !important;
 }
 
 .curr-day .year {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .curr-day .date {
-    font-size: 40px;
+  font-size: 40px;
 }
 
-.memory-card .user-profile .avatar {
-    width: 48px;
-    height: 48px;
-    vertical-align: middle;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+.prev-day.cursor-pointer,
+.next-day.cursor-pointer {
+  cursor: pointer;
+}
+
+.memory-card a {
+  text-decoration: none;
+}
+
+.memory-card .cursor-zoom-in {
+  cursor: zoom-in;
+}
+
+.memory-card .br-4 {
+  border-radius: 4px;
+}
+
+.memory-card video,
+.memory-card audio,
+.memory-card img {
+  max-width: 100%;
+}
+
+.memory-card video {
+  border: 1px solid;
+}
+
+.memory-card .avatar {
+  width: 48px;
+  height: 48px;
+  vertical-align: middle;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.memory-card .user-info {
+  padding-left: 16px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.memory-card .user-info .time {
+  padding-top: 4px;
+  color: #99a2aa;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.memory-card .user-info .user-name {
+  color: #fb7299;
+  font-size: 16px;
+}
+
+.memory-card .user-type {
+  font-size: 13px;
+  border: 1px solid #fb7299;
+  margin-right: 5px;
+  padding: 0 3px;
+  border-radius: 2px;
+}
+
+.memory-card .dynamic-link {
+  color: #178bcf;
+}
+
+.memory-card .memory-content {
+  padding-left: 80px;
+  padding-top: 0;
+}
+
+.memory-card .cut-title,
+.memory-card .cut-media {
+  padding-left: 80px;
+}
+
+.memory-card .origin {
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #f4f5f7;
+}
+
+.memory-card .origin .origin-user-profile .origin-avatar {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.memory-card .origin .origin-user-profile .origin-user-name {
+  display: inline-block;
+  font-size: 14px;
+  color: #00a1d6;
+  line-height: 24px;
+  vertical-align: top;
+  padding: 0 8px;
+}
+
+.memory-card .origin .origin-user-profile .origin-user-tip {
+  display: inline-block;
+  font-size: 12px;
+  color: #99a2aa;
+  vertical-align: top;
+  padding-top: 1px;
+}
+
+
+.memory-card .article-container {
+  max-width: 520px;
+  width: 100%;
+  background: #fff;
+  cursor: pointer;
+  border-top: 1px solid #e5e9ef;
+  text-align: left;
+  border: 1px solid #e5e9ef;
+  border-radius: 4px;
+}
+
+.memory-card .article-container .images-area {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+}
+
+.memory-card .article-container .images-area img {
+  margin: 0;
+  width: 100%;
+}
+
+.memory-card .article-container .text-area {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px 20px 14px;
+  -webkit-transition: -webkit-box-shadow 0.2s
+    cubic-bezier(0.22, 0.58, 0.12, 0.98);
+  transition: -webkit-box-shadow 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+  transition: box-shadow 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+  transition: box-shadow 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98),
+    -webkit-box-shadow 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+}
+
+.memory-card .article-container .text-area .title {
+  height: 22px;
+  line-height: 22px;
+  font-size: 16px;
+  color: #212121;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 6px;
+  -webkit-transition: color 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+  transition: color 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+}
+
+.memory-card .article-container .text-area .content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 12px;
+  line-height: 19px;
+  max-height: 3.166666666666667em;
+  color: #666;
+}
+
+.memory-card .video-container {
+  height: 127px;
+  background: #fff;
+  border-radius: 4px;
+  text-align: left;
+  position: relative;
+  border: 1px solid #e5e9ef;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.memory-card .video-container .video-wrap {
+  display: flex;
+}
+
+.memory-card .video-container .image-area,
+.memory-card .video-container .text-area {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.memory-card .video-container .image-area {
+  width: 203px;
+  height: 127px;
+  position: relative;
+}
+
+.memory-card .video-container .text-area {
+  height: 100%;
+  margin: 0 12px 0 16px;
+  flex: 1;
+}
+
+.memory-card .video-container .types {
+  padding: 0 4px;
+  height: 18px;
+  border-radius: 2px;
+  background: #fb7299;
+  color: #fff;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 3;
+  -webkit-transition: opacity 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+  transition: opacity 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+}
+
+.memory-card .video-container .image-area img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+}
+
+.memory-card .video-container .text-area .title {
+  -webkit-transition: color 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+  transition: color 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 14px;
+  line-height: 19px;
+  max-height: 2.714285714285714em;
+  color: #212121;
+  margin-top: 9px;
+  height: 38px;
+}
+
+.memory-card .video-container .text-area .content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  font-size: 12px;
+  line-height: 19px;
+  margin-top: 8px;
+  color: #666;
+  height: 57px;
 }

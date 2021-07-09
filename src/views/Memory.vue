@@ -2,7 +2,7 @@
     <v-app>
         <v-container class="sub-container d-flex flex-wrap">
             <div class="date-line">
-                <div class="prev-day" @click="dateIndex = Math.max(dateIndex - 1, 0)">
+                <div :class="'prev-day' + (dateIndex > 0 ? ' cursor-pointer' : '')" @click="dateIndex = Math.max(dateIndex - 1, 0)">
                     <div class="year">{{ dateIndex &gt; 0 ? dateList[dateIndex - 1].substring(0, 4) : "0000" }}</div>
                     <div class="date">{{ dateIndex &gt; 0 ? dateList[dateIndex - 1].substr(5) : "00.00" }}</div>
                 </div>
@@ -13,9 +13,9 @@
                             <div class="date">{{ dateList[dateIndex].substr(5) }}</div>
                         </v-card>
                     </template>
-                    <v-date-picker v-model="currDate" :allowed-dates="allowedDates" @change="currDateChange" no-title></v-date-picker>
+                    <v-date-picker v-model="currDate" locale="zh-cn" :allowed-dates="allowedDates" @change="currDateChange" no-title></v-date-picker>
                 </v-menu>
-                <div class="next-day" @click="dateIndex = Math.min(dateIndex + 1, dateList.length - 1)">
+                <div :class="'next-day' + (dateIndex < dateList.length - 1 ? ' cursor-pointer' : '')" @click="dateIndex = Math.min(dateIndex + 1, dateList.length - 1)">
                     <div class="year">{{ dateIndex &lt; dateList.length - 1 ? dateList[dateIndex + 1].substring(0, 4) : "9999" }}</div>
                     <div class="date">{{ dateIndex &lt; dateList.length - 1 ? dateList[dateIndex + 1].substr(5) : "99.99" }}</div>
                 </div>
@@ -62,18 +62,14 @@ export default {
                 dateList.push(response.data[i].day)
             }
             this.dateList = dateList
+            this.loadDayData(0)
         })
     },
     watch: {
         dateIndex(newDateIndex) {
             this.currDate = this.dateList[newDateIndex].replaceAll('.', '-')
             if (!this.dateData[newDateIndex]) {
-                axios.get(process.env.VUE_APP_API_MEMORY_PREFIX + 'day/' + this.dateList[newDateIndex] + '?v=' + this.dayDatas[newDateIndex].version).then(response => {
-                    this.dateData[newDateIndex] = response.data
-                    if (newDateIndex == this.dateIndex) {
-                        this.currDatas = this.dateData[newDateIndex]
-                    }
-                })
+                this.loadDayData(newDateIndex)
             } else {
                 this.currDatas = this.dateData[newDateIndex]
             }
@@ -90,6 +86,14 @@ export default {
             } else {
                 this.currDate = this.dateList[this.dateIndex].replaceAll('.', '-')
             }
+        },
+        loadDayData: function(index) {
+            axios.get(process.env.VUE_APP_API_MEMORY_PREFIX + 'day/' + this.dateList[index] + '?v=' + this.dayDatas[index].version).then(response => {
+                this.dateData[index] = response.data
+                if (index == this.dateIndex) {
+                    this.currDatas = this.dateData[index]
+                }
+            })
         }
     }
 }
