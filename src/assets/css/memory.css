@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "bp-icon-font";
+  src: url('/font/bp-icon-font.woff') format('woff');
+}
+
 .date-line {
   display: flex;
   align-items: center;
@@ -103,13 +108,13 @@
 }
 
 .memory-card .memory-content {
-  padding-left: 80px;
+  padding-left: 16px;
   padding-top: 0;
 }
 
-.memory-card .cut-title,
-.memory-card .cut-media {
-  padding-left: 80px;
+.memory-card .cut-title{
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .memory-card .origin {
@@ -142,6 +147,32 @@
   padding-top: 1px;
 }
 
+.memory-card .origin .delete-tip {
+  color: #99a2aa;
+  line-height: 22px;
+  position: relative;
+}
+
+.memory-card .origin .delete-tip i {
+  font-family: "bp-icon-font";
+  font-size: 14px;
+  font-style: normal;
+  line-height: 22px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.memory-card .origin .delete-tip i:before {
+  content: "\E007";
+}
+
+.memory-card .origin .delete-tip span {
+  font-size: 14px;
+  line-height: 22px;
+  display: block;
+  text-indent: 20px;
+}
 
 .memory-card .article-container {
   max-width: 520px;
@@ -178,7 +209,7 @@
     -webkit-box-shadow 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
 }
 
-.memory-card .article-container .text-area .title {
+.memory-card .article-container .text-area .text-title {
   height: 22px;
   line-height: 22px;
   font-size: 16px;
@@ -191,7 +222,7 @@
   transition: color 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
 }
 
-.memory-card .article-container .text-area .content {
+.memory-card .article-container .text-area .text-content {
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
@@ -205,6 +236,7 @@
 }
 
 .memory-card .video-container {
+  max-width: 520px;
   height: 127px;
   background: #fff;
   border-radius: 4px;
@@ -261,7 +293,7 @@
   border-radius: 0 4px 4px 0;
 }
 
-.memory-card .video-container .text-area .title {
+.memory-card .video-container .text-area .text-title {
   -webkit-transition: color 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
   transition: color 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
   overflow: hidden;
@@ -278,7 +310,7 @@
   height: 38px;
 }
 
-.memory-card .video-container .text-area .content {
+.memory-card .video-container .text-area .text-content {
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
@@ -290,4 +322,15 @@
   margin-top: 8px;
   color: #666;
   height: 57px;
+}
+
+@media screen and (min-width: 600px) {
+  .memory-card .memory-content {
+    padding-left: 80px;
+  }
+
+  .memory-card .cut-title,
+  .memory-card .cut-media {
+    padding-left: 64px;
+  }
 }

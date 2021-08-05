@@ -193,10 +193,14 @@ export default {
         if (!this.lastSearchOptions.loadingRequestId === newLoadingRequestId) {
           return
         }
-        if (nextPage) {
-          this.articles.push(...response.data.data)
-        } else {
-          this.articles.splice(0, this.articles.length, ...response.data.data)
+        if (response.data.data && response.data.data.length > 0) {
+          if (nextPage) {
+            this.articles.push(...response.data.data)
+          } else {
+            this.articles.splice(0, this.articles.length, ...response.data.data)
+          }
+        } else if (!nextPage) {
+          this.articles.splice(0, this.articles.length)
         }
         this.lastSearchOptions.hasNextPage = response.data.pageCount > (this.lastSearchOptions.pageIndex + 1)
         this.loading = false

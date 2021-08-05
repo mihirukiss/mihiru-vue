@@ -7,5 +7,6 @@ module.exports = {
       config.plugin('webpack-bundle-analyzer').use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin).end()
     }
   },
-  publicPath: process.env.NODE_ENV === 'production' ? 'https://cdn.mihiru.com/' : '/'
+  publicPath: process.env.NODE_ENV === 'production' ? 'https://cdn.mihiru.com/' : '/',
+  productionSourceMap: false
 }

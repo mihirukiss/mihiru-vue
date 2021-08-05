@@ -6,14 +6,14 @@
                     <div class="year">{{ dateIndex &gt; 0 ? dateList[dateIndex - 1].substring(0, 4) : "0000" }}</div>
                     <div class="date">{{ dateIndex &gt; 0 ? dateList[dateIndex - 1].substr(5) : "00.00" }}</div>
                 </div>
-                <v-menu v-model="showCalendar" absolute offset-y>
+                <v-menu v-model="showCalendar" :close-on-content-click="false" absolute offset-y>
                     <template v-slot:activator="{ on, attrs }">
                         <v-card class="curr-day" v-bind="attrs" v-on="on" flat>
                             <div class="year">{{ dateList[dateIndex].substring(0, 4) }}</div>
                             <div class="date">{{ dateList[dateIndex].substr(5) }}</div>
                         </v-card>
                     </template>
-                    <v-date-picker v-model="currDate" locale="zh-cn" :allowed-dates="allowedDates" @change="currDateChange" no-title></v-date-picker>
+                    <v-date-picker v-model="currDate" locale="zh-cn" :allowed-dates="allowedDates" @change="currDateChange" @input="showCalendar = false" no-title></v-date-picker>
                 </v-menu>
                 <div :class="'next-day' + (dateIndex < dateList.length - 1 ? ' cursor-pointer' : '')" @click="dateIndex = Math.min(dateIndex + 1, dateList.length - 1)">
                     <div class="year">{{ dateIndex &lt; dateList.length - 1 ? dateList[dateIndex + 1].substring(0, 4) : "9999" }}</div>
@@ -52,7 +52,8 @@ export default {
         dateData: {},
         currDate: '2019-10-28',
         currDatas: [],
-        showCalendar: false
+        showCalendar: false,
+        loadingDatas: [{"id":"loading","type":-1}]
     }),
     mounted: function(){
         axios.get(process.env.VUE_APP_API_MEMORY_PREFIX + 'days').then(response => {
@@ -88,6 +89,7 @@ export default {
             }
         },
         loadDayData: function(index) {
+            this.currDatas = this.loadingDatas
             axios.get(process.env.VUE_APP_API_MEMORY_PREFIX + 'day/' + this.dateList[index] + '?v=' + this.dayDatas[index].version).then(response => {
                 this.dateData[index] = response.data
                 if (index == this.dateIndex) {

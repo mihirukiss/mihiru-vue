@@ -17,15 +17,18 @@
             </div>
         </v-card-text>
         <v-card-text class="memory-content">
-            <div class="article-container" v-if="memory.type == 64">
+            <div class="loading-container text-center py-2" v-if="memory.type == -1">
+                <v-progress-circular :size="70" :width="7" color="#FB5458" indeterminate></v-progress-circular>
+            </div>
+            <div class="article-container" v-else-if="memory.type == 64">
                 <a target="_blank" :href="'https://www.bilibili.com/read/cv' + memory.rid">
                     <div>
                         <div class="images-area">
                             <img class="article-img" :src="dataUrlPrefix +'img/' + memory.image_urls[0] + '@520w_120h_1e_1c' + (memory.image_urls[0].endsWith('.gif')?'.gif':'.jpg')" />
                         </div>
                         <div class="text-area">
-                            <div class="title">{{ memory.title }}</div>
-                            <div class="content">{{ memory.content }}</div>
+                            <div class="text-title">{{ memory.title }}</div>
+                            <div class="text-content">{{ memory.content }}</div>
                         </div>
                     </div>
                 </a>
@@ -38,17 +41,18 @@
                             <img :src="dataUrlPrefix +'img/' + memory.pic + '@203w_127h_1e_1c' + (memory.pic.endsWith('.gif')?'.gif':'.jpg')" />
                         </div>
                         <div class="text-area">
-                            <div class="title">{{ memory.title }}</div>
-                            <div class="content">{{ memory.desc }}</div>
+                            <div class="text-title">{{ memory.title }}</div>
+                            <div class="text-content">{{ memory.desc }}</div>
                         </div>
                     </div>
                 </a>
             </div>
-            <div v-else-if="memory.content" v-html="contentWithCtrl"></div>
             <div v-else-if="!memory.type">
                 {{ (memory.join_user_profiles && memory.join_user_profiles.length > 0)?'与':'' }}<span class="dynamic-link" v-for="(joinUser, index) in memory.join_user_profiles" v-text="'@' + joinUser.uname" v-bind:key="memory.id + '_join_' + index"></span>{{ (memory.join_user_profiles && memory.join_user_profiles.length > 0)?'联动':'' }}开始直播《{{ memory.title }}》
-                <a v-if="memory.full_record" class="dynamic-link" target="_blank" :href="memory.full_record">查看完整录播>></a>
+                <a v-if="memory.full_record" class="dynamic-link" target="_blank" :href="memory.full_record">查看录播>></a>
+                <div v-if="memory.content" v-html="contentWithCtrl"></div>
             </div>
+            <div v-else-if="memory.content" v-html="contentWithCtrl"></div>
             <div v-if="pictures.length > 0">
                 <viewer :trigger="pictures" :options="options">
                     <template v-for="(picture, index) in pictures">
@@ -57,11 +61,15 @@
                 </viewer>
             </div>
             <div v-if="memory.origin" class="origin">
-                <div class="origin-user-profile">
+                <div class="origin-user-profile" v-if="memory.origin.user_profile">
                     <img class="origin-avatar" :src="dataUrlPrefix +'img/' + memory.origin.user_profile.face + '@24w_24h' + (memory.origin.user_profile.face.endsWith('.gif')?'.gif':'.jpg')" />
                     <div class="origin-user-name">{{ memory.origin.user_profile.uname }}</div>
-                    <div class="origin-user-tip" v-if="memory.origin.type == 2">的图片</div>
+                    <div class="origin-user-tip" v-if="memory.origin.type == 1 || memory.origin.type == 4 || memory.origin.type == 16">的动态</div>
+                    <div class="origin-user-tip" v-else-if="memory.origin.type == 2">的图片</div>
+                    <div class="origin-user-tip" v-else-if="memory.origin.type == 8">的投稿视频</div>
+                    <div class="origin-user-tip" v-else-if="memory.origin.type == 64">的文章</div>
                 </div>
+                <div class="delete-tip" v-else><i></i><span>源动态已被作者删除</span></div>
                 <div class="article-container" v-if="memory.origin.type == 64">
                     <a target="_blank" :href="'https://www.bilibili.com/read/cv' + memory.origin.rid">
                         <div>
@@ -69,8 +77,8 @@
                                 <img class="article-img" :src="dataUrlPrefix +'img/' + memory.origin.image_urls[0] + '@520w_120h_1e_1c' + (memory.origin.image_urls[0].endsWith('.gif')?'.gif':'.jpg')" />
                             </div>
                             <div class="text-area">
-                                <div class="title">{{ memory.origin.title }}</div>
-                                <div class="content">{{ memory.origin.content }}</div>
+                                <div class="text-title">{{ memory.origin.title }}</div>
+                                <div class="text-content">{{ memory.origin.content }}</div>
                             </div>
                         </div>
                     </a>
@@ -83,8 +91,8 @@
                                 <img :src="dataUrlPrefix +'img/' + memory.origin.pic + '@203w_127h_1e_1c' + (memory.origin.pic.endsWith('.gif')?'.gif':'.jpg')" />
                             </div>
                             <div class="text-area">
-                                <div class="title">{{ memory.origin.title }}</div>
-                                <div class="content">{{ memory.origin.desc }}</div>
+                                <div class="text-title">{{ memory.origin.title }}</div>
+                                <div class="text-content">{{ memory.origin.desc }}</div>
                             </div>
                         </div>
                     </a>
@@ -99,13 +107,13 @@
                 </div>
             </div>
         </v-card-text>
-        <template v-for="(cut, index) in memory.cuts">
-            <v-card-title class="cut-title" v-bind:key="memory.id + '_cut_title_' + index">{{ cut.title }}</v-card-title>
-            <v-card-text class="cut-media" v-bind:key="memory.id + '_cut_media_' + index">
+        <v-card-text v-for="(cut, index) in memory.cuts" v-bind:key="memory.id + '_cut_' + index">
+            <div class="cut-media">
                 <video controls preload="none" :src="dataUrlPrefix +'media/' + cut.file" v-if="cut.type == 1"></video>
                 <audio controls preload="none" :src="dataUrlPrefix +'media/' + cut.file" v-if="cut.type == 0"></audio>
-            </v-card-text>
-        </template>
+            </div>
+            <div class="cut-title">{{ cut.title }}</div>
+        </v-card-text>
     </v-card>
 </template>
 <script>
@@ -187,12 +195,12 @@ export default {
                     if(splitTexts[i].startsWith('#') && splitTexts[i].endsWith('#')){
                         result = result + '<span class="dynamic-link">' + splitTexts[i] + '</span>'
                     } else {
-                        result = result + splitTexts[i]
+                        result = result + splitTexts[i].replaceAll('\n', '<br/>')
                     }
                 }
                 return result
             } else {
-                return text;
+                return text.replaceAll('\n', '<br/>');
             }
         },
         buildPicturesInfo: function(pictures) {
