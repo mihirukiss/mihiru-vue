@@ -115,7 +115,7 @@ export default {
       this.$vuetify.theme.dark = this.darkMode
     }
     if (localStorage.maxRatting) {
-      this.maxRatting = localStorage.maxRatting
+      this.maxRatting = parseInt(localStorage.maxRatting)
     }
     if (localStorage.allowTags) {
       this.allowTags = localStorage.allowTags.split(',')
