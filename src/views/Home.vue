@@ -1,11 +1,12 @@
 <template>
     <v-container fluid>
         <span class="top-span">好好地走下去</span>
-        <span class="link-span"><a href="https://mihiru.com/onlooker/" title="管人食芥末">管人食芥末</a></span>
         <span class="link-span"><router-link to="/miarticles">怪弥书</router-link></span>
-        <span class="link-span"><a href="https://mihiru.com/mikitube/" title="Mikitube">Mikitube</a></span>
-        <span class="link-span"><a href="https://mahiru.cn" title="孟按钮">孟按钮</a></span>
+        <span class="link-span"><router-link to="/memory">历久弥真</router-link></span>
         <span class="link-span"><a href="https://www.supermikimiki.com" title="弥按钮">弥按钮</a></span>
+        <span class="link-span"><a href="https://mahiru.cn" title="孟按钮">孟按钮</a></span>
+        <span class="link-span"><a href="https://mihiru.com/onlooker/" title="管人食芥末">管人食芥末</a></span>
+        <span class="link-span"><a href="https://mihiru.com/mikitube/" title="Mikitube">Mikitube</a></span>
     </v-container>
 </template>
 <style scoped>

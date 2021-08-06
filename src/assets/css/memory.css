@@ -11,6 +11,14 @@
   width: 100%;
 }
 
+a.no-decoration {
+  text-decoration: none;
+}
+
+.full-width {
+  width: 100%;
+}
+
 .prev-day,
 .next-day {
   font-size: 14px;

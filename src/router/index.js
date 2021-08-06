@@ -30,7 +30,7 @@ const routes = [
     name: 'Memory',
     component: Memory,
     meta: {
-      title: "Memory"
+      title: "历久弥真"
     }
   },
 ]

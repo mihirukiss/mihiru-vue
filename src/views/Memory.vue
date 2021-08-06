@@ -21,6 +21,7 @@
                 </div>
             </div>
             <memory-card v-for="memory in currDatas" :memory="memory" v-bind:key="memory.id"></memory-card>
+            <div class="text-center full-width"><router-link class="no-decoration" to="/">返回首页</router-link></div>
         </v-container>
     </v-app>
 </template>
