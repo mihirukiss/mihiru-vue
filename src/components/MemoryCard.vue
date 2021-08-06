@@ -83,7 +83,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="video-container" v-if="memory.origin.type == 8">
+                <div class="video-container" v-else-if="memory.origin.type == 8">
                     <a target="_blank" :href="'https://www.bilibili.com/video/' + memory.origin.bvid">
                         <div class="video-wrap">
                             <div class="image-area">
