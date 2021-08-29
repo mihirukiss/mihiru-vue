@@ -3,12 +3,12 @@
       <v-container fluid>
         <v-container class="slot-sontainer d-flex flex-column align-center">
           <canvas class="canvas" ref="canvas" :width="reelAreaLeft * 2 + reelAreaWidth" :height="reelAreaTop * 2 + reelAreaHeight"></canvas>
-          <v-btn-toggle v-model="lineNumIndex">
+          <v-btn-toggle mandatory v-model="lineNumIndex">
             <v-btn :disabled="state != 0">{{ lineNums[0] }}</v-btn>
             <v-btn :disabled="state != 0">{{ lineNums[1] }}</v-btn>
             <v-btn :disabled="state != 0">{{ lineNums[2] }}</v-btn>
           </v-btn-toggle>
-          <v-btn class="mt-3" color="success" :disabled="state != 0" dark fab @click="startGame">GO!</v-btn>
+          <v-btn class="mt-3" :color="state < 1 ? 'success' : 'error'" :disabled="state != 0 && state !=2" dark fab @click="startOrStopGame">{{ state &lt; 1 ? 'GO!' : 'STOP!'}}</v-btn>
           <v-alert class="mt-3" type="error" :value="showResetAlert">
             <v-row align="center">
               <v-col class="grow">你的爱不够了, 是否要重置?</v-col>
@@ -20,7 +20,7 @@
               </v-col>
             </v-row>
           </v-alert>
-          <v-dialog v-model="helpDialog">
+          <v-dialog v-model="helpDialog" max-width="600">
             <template v-slot:activator="{ on, attrs }">
               <v-btn class="mt-3" color="info" dark fab x-small v-bind="attrs" v-on="on">?</v-btn>
             </template>
@@ -30,6 +30,7 @@
                 <p>感谢<a href="https://space.bilibili.com/59275" target="_blank">梦魇老师</a>同意使用图像素材</p>
                 <p>数字按钮可以切换判定线条数, 每次开始时会扣减判定线条数X{{ lineCost }}的点数.</p>
                 <p>点击[GO!]按钮即可开始转动, 当剩余点数不足扣除开始所需的点数时, 可以选择重置点数.</p>
+                <p>点击[STOP!]可以快速停止转动但并不影响转动结果<br/>
                 <p>转动停止后, 每条判定线上的三个图像如果满足以下情形, 将获得对应分数<br/>
                   <ul>
                     <li>三个连衣裙弥: {{ rewards[1] }}</li>
@@ -46,7 +47,7 @@
                     <li>mihiru: {{ specialRewards.mihiru }}</li>
                     <li>西米露: {{ specialRewards.saiMailou }}</li>
                     <li>一家三口: {{ specialRewards.family }}</li>
-                    <li>MMM: {{ specialRewards.mmm }}</li>
+                    <li>MMM一期生: {{ specialRewards.mmm }}</li>
                     <li>三个不同弥: {{ specialRewards.mimimi }}</li>
                     <li>泳装mihiru: 进入Fever Time, 免费连抽{{ feverTimeAddNum }}次</li>
                   </ul>
@@ -112,20 +113,20 @@ export default {
         5, // 女鬼弥 1
         10, // 高叉孟 2
         15, // 女仆星弥 3
-        150, // 奶茶星弥 4
+        70, // 奶茶星弥 4
         35, // 魔魔 5
         30, // 女儿 6
         20, // 大哥 7
-        250, // 泳装弥 8
-        200, // 泳装孟 9
-        100 // 魔法大哥 10
+        120, // 泳装弥 8
+        100, // 泳装孟 9
+        50 // 魔法大哥 10
       ],
       specialRewards: {
-        mihiru: 50,
-        saiMailou: 70,
-        family: 100,
-        mmm: 120,
-        mimimi: 150
+        mihiru: 20,
+        saiMailou: 50,
+        family: 80,
+        mmm: 100,
+        mimimi: 120
       },
       reelIndex: [0, 0, 0],
       reelOffset: [0, 0, 0],
@@ -148,7 +149,8 @@ export default {
       backgroundImage: new Image(),
       backgroundImageLoaded: false,
       showResetAlert: false,
-      helpDialog: false
+      helpDialog: false,
+      requestAnimationFrameId: null
     }),
     computed: {
       stopSize: function() {
@@ -331,8 +333,12 @@ export default {
         const reelItemOffset = reelItemIndex * this.realItemSize
         this.slotCtx.drawImage(this.reelImage, 0, reelItemOffset, this.realItemSize, this.realItemSize, x + this.reelAreaLeft, y + this.reelAreaTop, this.realItemSize, this.realItemSize);
       },
-      startGame: function() {
-        if (this.state > 0 || this.state < 0) {
+      startOrStopGame: function() {
+        if (this.state === 1 || this.state === 3 || this.state < 0) {
+          return
+        }
+        if (this.state > 0) {
+          this.fastStop()
           return
         }
         if (this.feverTimes > 0) {
@@ -353,10 +359,30 @@ export default {
         this.reelChangeOffset[0] = (Math.floor(Math.random() * this.reel.length * 5) + this.reel.length * 5) * this.realItemSize
         this.reelChangeOffset[1] = this.reelChangeOffset[0] + (Math.floor(Math.random() * this.reel.length * 3) + this.reel.length) * this.realItemSize
         this.reelChangeOffset[2] = this.reelChangeOffset[1] + (Math.floor(Math.random() * this.reel.length * 3) + this.reel.length) * this.realItemSize
-        window.requestAnimationFrame(this.drawFrame)
+        this.requestAnimationFrameId = window.requestAnimationFrame(this.drawFrame)
+      },
+      fastStop: function() {
+        if (this.requestAnimationFrameId != null) {
+          window.cancelAnimationFrame(this.requestAnimationFrameId)
+        }
+        this.fastStopReel(0)
+        this.fastStopReel(1)
+        this.fastStopReel(2)
+        this.requestAnimationFrameId = window.requestAnimationFrame(this.drawFrame)
+      },
+      fastStopReel: function(i) {
+        this.reelOffset[i] += this.reelChangeOffset[i]
+        this.reelChangeOffset[i] = 0
+        if (this.reelOffset[i] >= this.realItemSize) {
+          this.reelIndex[i] += Math.floor(this.reelOffset[i] / this.realItemSize)
+          if (this.reelIndex[i] >= this.reel.length) {
+            this.reelIndex[i] = this.reelIndex[i] % this.reel.length
+          }
+          this.reelOffset[i] = this.reelOffset[i] % this.realItemSize
+        }
       },
       drawFrame: function() {
-        if (this.state === 1) {
+        if (this.state === 1 || this.state === 2) {
           this.scollRell(0)
           if (this.reelSpeed[1] > 0 || this.reelSpeed[0] >= this.maxSpeed || this.reelChangeOffset[0] <= this.stopSize || Math.floor(Math.random() * this.maxSpeed) < this.reelSpeed[0]) {
             this.scollRell(1)
@@ -368,18 +394,20 @@ export default {
             this.points--
             this.rewardPoints++
           } else if (this.reelChangeOffset[2] <= 0) {
-            this.state = 2
+            this.state = 3
             this.calReward()
             this.rewardSpeed = Math.max(1, Math.floor(this.rewardPoints / 60))
+          } else {
+            this.state = 2
           }
-        } else if (this.state === 2) {
+        } else if (this.state === 3) {
           if (this.rewardPoints <= this.rewardSpeed) {
             this.points += this.rewardPoints
             this.rewardPoints = 0
             this.state = 0
             if (this.feverTimes > 0) {
               this.renderCanvas()
-              this.startGame()
+              this.startOrStopGame()
               return
             } else {
               this.inFever = false
@@ -391,7 +419,7 @@ export default {
         }
         this.renderCanvas()
         if (this.state > 0) {
-          window.requestAnimationFrame(this.drawFrame)
+          this.requestAnimationFrameId = window.requestAnimationFrame(this.drawFrame)
         }
       },
       scollRell: function(i) {
