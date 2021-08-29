@@ -44,7 +44,7 @@ import axios from 'axios'
 import MemoryCard from '../components/MemoryCard.vue'
 
 export default {
-  components: { MemoryCard },
+    components: { MemoryCard },
     name: "Memory",
     data: ()=>({
         dateList: ['2019.10.28'],

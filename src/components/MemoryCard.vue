@@ -135,7 +135,7 @@ export default {
     }),
     computed: {
         memoryTime: function() {
-            return moment.unix(this.memory.timestamp).utc(8).format('YYYY-MM-DD HH:mm')
+            return moment.unix(this.memory.timestamp).utcOffset(8).format('YYYY-MM-DD HH:mm')
         },
         contentWithCtrl: function() {
             return this.formatContentHtml(this.memory)
