@@ -6,7 +6,7 @@
             <template v-slot:activator="{ on, attrs }">
                 <v-card-text v-bind="attrs" v-on="on" class="flex-grow-1" v-text="article.summary"></v-card-text>
             </template>
-            <v-card>
+            <v-card ref="dialog">
                 <v-toolbar color="info">
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
@@ -73,10 +73,10 @@ export default {
     },
     methods: {
         copyLink(){
-            const clipboard = new ClipboardJS('.copy-link', {
-                container: document.querySelector('.v-dialog')
-            });
             const card = this;
+            const clipboard = new ClipboardJS('.copy-link', {
+                container: card.$refs.dialog.$el
+            })
             clipboard.on('success', function() {
                 card.successNotice = true
                 clipboard.destroy()

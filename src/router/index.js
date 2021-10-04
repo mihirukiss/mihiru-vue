@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 const Home = () => import('../views/Home.vue')
 const MiArticles = () => import('../views/MiArticles.vue')
 const Memory = () => import('../views/Memory.vue')
+const SlotGame = () => import('../views/SlotGame.vue')
 
 Vue.use(VueRouter)
 
@@ -31,6 +32,14 @@ const routes = [
     component: Memory,
     meta: {
       title: "历久弥真"
+    }
+  },
+  {
+    path: '/slot',
+    name: 'SlotGame',
+    component: SlotGame,
+    meta: {
+      title: "摇摇乐"
     }
   },
 ]
