@@ -1,5 +1,8 @@
 {
     "include": [
       "./src/**/*"
-    ]
+    ],
+    "vueCompilerOptions": {
+      "experimentalCompatMode": 2
+    }
 }

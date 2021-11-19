@@ -1,6 +1,6 @@
 @font-face {
   font-family: "bp-icon-font";
-  src: url('/font/bp-icon-font.woff') format('woff');
+  src: url('../fonts/bp-icon-font.woff') format('woff');
 }
 
 .date-line {

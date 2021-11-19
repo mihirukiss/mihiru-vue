@@ -27,7 +27,7 @@
 </template>
 <style scoped>
 @import "../assets/css/memory.css";
-@import url(https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css);
+@import "../assets/css/materialdesignicons.css";
 div.v-application {
     background-color: #FCFAF2; /* fallback for old browsers */
     background-image: url(../assets/texture.png);

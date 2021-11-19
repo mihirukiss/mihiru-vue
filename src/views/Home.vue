@@ -60,7 +60,7 @@
           <span class="link-span" style="top: 36px; left: 28px;"><router-link to="/miarticles">怪弥书</router-link></span>
           <span class="link-span" style="top: 100px; left: 172px;"><router-link to="/slot">摇摇乐</router-link></span>
           <span class="link-span" style="top: 140px; left: 120px;"><a href="https://www.supermikimiki.com" title="弥按钮">弥按钮</a></span>
-          <span class="link-span" style="top: 222px; left: 138px;"><a href="https://mahiru.cn" title="孟按钮">孟按钮</a></span>
+          <span class="link-span" style="top: 222px; left: 138px;"><a href="https://voice.mahiru.live" title="孟按钮">孟按钮</a></span>
           <span class="link-span" style="top: 286px; left: 140px;"><a href="https://mihiru.com/onlooker/" title="管人食芥末">管人食芥末</a></span>
           <span class="link-span" style="top: 359px; left: 200px;"><a href="https://mihiru.com/mikitube/" title="Mikitube">Mikitube</a></span>
         </v-container>

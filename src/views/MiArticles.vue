@@ -65,7 +65,7 @@
 </template>
 <style scoped>
 @import "../assets/css/miarticles.css";
-@import url(https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css);
+@import "../assets/css/materialdesignicons.css";
 </style>
 <script>
 import axios from 'axios'
@@ -129,7 +129,11 @@ export default {
     }
     axios.get(process.env.VUE_APP_API_ARTICLES_PREFIX + 'tags').then(response => this.tags = response.data)
     this.doSearch(false)
-    addEventListener('scroll', this.handleScroll)
+    window.addEventListener('scroll', this.handleScroll)
+  },
+
+  beforeDestroy: function(){
+    window.removeEventListener('scroll', this.handleScroll)
   },
 
   watch: {

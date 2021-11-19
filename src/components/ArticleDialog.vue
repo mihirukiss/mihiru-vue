@@ -53,7 +53,10 @@ export default {
     },
     mounted: function(){
         document.getElementsByTagName('html')[0].className = 'overflow-y-hidden'
-        axios.get(process.env.VUE_APP_API_ARTICLES_PREFIX + this.articleId).then(response => this.article = response.data)
+        axios.get(process.env.VUE_APP_API_ARTICLES_PREFIX + this.articleId).then(response => {
+            response.data.content = response.data.content.replaceAll('https://cdn.mihiru.com/miarticles/img/', process.env.VUE_APP_ARTICLE_IMG_PREFIX)
+            this.article = response.data
+        })
     },
     methods: {
         closeDialog(){
