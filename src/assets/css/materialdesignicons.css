@@ -20,6 +20,10 @@
   .mdi-close::before {
     content: "\F0156";
   }
+
+  .mdi-close-circle::before {
+    content: "\F0159";
+  }
   
   .mdi-cog::before {
     content: "\F0493";

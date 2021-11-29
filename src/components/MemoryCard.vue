@@ -60,8 +60,8 @@
                     </template>
                 </viewer>
             </div>
-            <div v-if="memory.origin" class="origin">
-                <div class="origin-user-profile" v-if="memory.origin.user_profile">
+            <div v-if="memory.origin && memory.origin.user_profile" class="origin">
+                <div class="origin-user-profile">
                     <img class="origin-avatar" :src="dataUrlPrefix +'img/' + memory.origin.user_profile.face + '@24w_24h' + (memory.origin.user_profile.face.endsWith('.gif')?'.gif':'.jpg')" />
                     <div class="origin-user-name">{{ memory.origin.user_profile.uname }}</div>
                     <div class="origin-user-tip" v-if="memory.origin.type == 1 || memory.origin.type == 4 || memory.origin.type == 16">的动态</div>
@@ -69,7 +69,6 @@
                     <div class="origin-user-tip" v-else-if="memory.origin.type == 8">的投稿视频</div>
                     <div class="origin-user-tip" v-else-if="memory.origin.type == 64">的文章</div>
                 </div>
-                <div class="delete-tip" v-else><i></i><span>源动态已被作者删除</span></div>
                 <div class="article-container" v-if="memory.origin.type == 64">
                     <a target="_blank" :href="'https://www.bilibili.com/read/cv' + memory.origin.rid">
                         <div>
@@ -105,6 +104,9 @@
                         </template>
                     </viewer>
                 </div>
+            </div>
+            <div v-else-if="memory.origin" class="origin">
+                <div class="delete-tip"><i></i><span>源动态已被作者删除</span></div>
             </div>
         </v-card-text>
         <v-card-text v-for="(cut, index) in memory.cuts" v-bind:key="memory.id + '_cut_' + index">

@@ -31,6 +31,15 @@
     </v-navigation-drawer>
 
     <v-main>
+      <v-alert
+        v-model="showLoadError"
+        close-text="关闭"
+        color="deep-purple accent-4"
+        dark
+        dismissible
+      >
+        加载数据失败, 请尝试刷新页面或重新搜索
+      </v-alert>
       <v-container class="d-inline-flex flex-wrap justify-center" fluid>
           <article-card v-for="article in articles" :article="article" v-bind:key="article.id"></article-card>
       </v-container>
@@ -91,6 +100,7 @@ export default {
     allowTags: [],
     denyTags: [],
     showHelpDialog: false,
+    showLoadError: false,
     darkMode: false,
     theme: '',
     lastSearchOptions: {
@@ -208,6 +218,10 @@ export default {
         }
         this.lastSearchOptions.hasNextPage = response.data.pageCount > (this.lastSearchOptions.pageIndex + 1)
         this.loading = false
+      }).catch(error => {
+        console.log(error)
+        this.loading = false
+        this.showLoadError = true
       })
     }
   }

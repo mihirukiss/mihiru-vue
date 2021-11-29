@@ -11,6 +11,6 @@ module.exports = {
       return [options]
     })
   },
-  publicPath: process.env.NODE_ENV === 'production' ? 'https://mihiru-1308377841.cos.accelerate.myqcloud.com/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? 'https://mihiru-1308377841.file.myqcloud.com/' : '/',
   productionSourceMap: false
 }
